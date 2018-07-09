@@ -1,4 +1,4 @@
-package com.example.androiddevelopment.djordjebulatovic;
+package com.example.androiddevelopment.djordjebulatovic.activitys;
 
 import android.support.v7.app.AppCompatActivity;
 
