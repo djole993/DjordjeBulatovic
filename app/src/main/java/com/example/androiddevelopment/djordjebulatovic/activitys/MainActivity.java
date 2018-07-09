@@ -1,5 +1,6 @@
 package com.example.androiddevelopment.djordjebulatovic.activitys;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
@@ -18,6 +21,7 @@ import com.example.androiddevelopment.djordjebulatovic.db.model.Prijava;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -62,19 +66,74 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+    protected void onResume() {
+        super.onResume();
+        refresh();
+    }
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+    private void refresh(){
+        ListView listView = (ListView) findViewById(R.id.listaPrijava);
+        ArrayAdapter<Prijava>adapter = (ArrayAdapter<Prijava>) listView.getAdapter();
+        if (adapter!=null){
+            try {
+                adapter.clear();
+                List<Prijava>list = getDatabaseHelper().getPrijavaDao().queryForAll();
+                adapter.addAll(list);
+                adapter.notifyDataSetChanged();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()){
+            case R.id.prijava_add:
+                final Dialog dialog = new Dialog(MainActivity.this);
+                dialog.setContentView(R.layout.add_new_prijava);
+
+                Button cancel = (Button) dialog.findViewById(R.id.cancel_prijava);
+                cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+
+                Button add = (Button) dialog.findViewById(R.id.add_prijava);
+                add.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        EditText naslov = (EditText) dialog.findViewById(R.id.prijava_naziv);
+                        EditText opis = (EditText) dialog.findViewById(R.id.prijava_opis);
+                        EditText status = (EditText) dialog.findViewById(R.id.prijava_status);
+                        EditText datum = (EditText) dialog.findViewById(R.id.prijava_datum);
+
+                        Prijava p = new Prijava();
+                        p.setNaziv(naslov.getText().toString());
+                        p.setOpis(opis.getText().toString());
+                        p.setStatus(status.getText().toString());
+                        p.setDatum((Date) datum.getText());
+
+                        try {
+                            getDatabaseHelper().getPrijavaDao().create(p);
+                            refresh();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+                break;
         }
 
         return super.onOptionsItemSelected(item);
     }
+
     public OrmLighthHelper getDatabaseHelper() {
         if (databaseHelper == null) {
             databaseHelper = OpenHelperManager.getHelper(this, OrmLighthHelper.class);
