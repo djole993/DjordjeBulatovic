@@ -16,6 +16,7 @@ public class Stavka {
     public static final String FIELD_STAVKA_KOMENTAR = "komentar";
     public static final String FIELD_STAVKA_DATUM = "datum";
     public static final String FIELD_STAVKA_SLIKA = "slika";
+    public static final String FIELD_STAVKA_PRIJAVA = "prijava";
 
     @DatabaseField(columnName = FIELD_STAVKA_ID, generatedId = true)
     private int id;
@@ -37,6 +38,9 @@ public class Stavka {
 
     @DatabaseField(columnName = FIELD_STAVKA_SLIKA)
     private String slika;
+
+    @DatabaseField(columnName = FIELD_STAVKA_PRIJAVA, foreign = true, foreignAutoRefresh = true)
+    private Prijava prijava;
 
     public Stavka(){
     }
@@ -71,6 +75,14 @@ public class Stavka {
 
     public void setNivo(float nivo) {
         this.nivo = nivo;
+    }
+
+    public Prijava getPrijava() {
+        return prijava;
+    }
+
+    public void setPrijava(Prijava prijava) {
+        this.prijava = prijava;
     }
 
     public String getKomentar() {

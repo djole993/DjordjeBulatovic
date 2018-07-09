@@ -48,28 +48,13 @@
             android:layout_height="wrap_content"
             android:text="Status"/>
 
-        <EditText
-            android:id="@+id/prijava_status"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+     <TextView
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:text="OTVOREN"
+         android:textSize="20dp"/>
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginBottom="5dp">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Datum"/>
-
-        <EditText
-            android:id="@+id/prijava_datum"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="date"/>
-    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

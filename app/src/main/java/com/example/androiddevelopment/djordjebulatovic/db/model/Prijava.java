@@ -31,9 +31,9 @@ public class Prijava {
     private String status;
 
     @DatabaseField(columnName = FIELD_PRIJAVA_DATUM)
-    private Date datum;
+    private String datum;
 
-    @ForeignCollectionField(columnName = Prijava.FIELD_PRIJAVA_STAVKE, eager = true)
+    @ForeignCollectionField(columnName = Prijava.FIELD_PRIJAVA_STAVKE)
     private ForeignCollection<Stavka> stavke;
 
     public Prijava(){}
@@ -70,11 +70,11 @@ public class Prijava {
         this.status = status;
     }
 
-    public Date getDatum() {
+    public String getDatum() {
         return datum;
     }
 
-    public void setDatum(Date datum) {
+    public void setDatum(String datum) {
         this.datum = datum;
     }
 

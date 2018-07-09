@@ -12,5 +12,9 @@
         android:title="ADD"
         android:icon="@android:drawable/ic_menu_add"
         app:showAsAction="ifRoom" />
+    <item android:id="@+id/prijava_about"
+        android:icon="@drawable/ic_info_black_24dp"
+        android:title="About"
+        app:showAsAction="ifRoom" />
 
 </menu>

@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.RatingBar;
 
 import com.example.androiddevelopment.djordjebulatovic.R;
 import com.example.androiddevelopment.djordjebulatovic.db.OrmLighthHelper;
@@ -109,14 +110,10 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         EditText naslov = (EditText) dialog.findViewById(R.id.prijava_naziv);
                         EditText opis = (EditText) dialog.findViewById(R.id.prijava_opis);
-                        EditText status = (EditText) dialog.findViewById(R.id.prijava_status);
-                        EditText datum = (EditText) dialog.findViewById(R.id.prijava_datum);
 
                         Prijava p = new Prijava();
                         p.setNaziv(naslov.getText().toString());
                         p.setOpis(opis.getText().toString());
-                        p.setStatus(status.getText().toString());
-                        p.setDatum((Date) datum.getText());
 
                         try {
                             getDatabaseHelper().getPrijavaDao().create(p);
@@ -129,7 +126,19 @@ public class MainActivity extends AppCompatActivity {
                 });
                 dialog.show();
                 break;
+                case R.id.prijava_about:
+                    final Dialog dialog1 = new Dialog(MainActivity.this);
+                    dialog1.setContentView(R.layout.informacije);
+                    Button zatvori = (Button) dialog1.findViewById(R.id.zatvori);
+                    zatvori.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog1.dismiss();
+                        }
+                    });
+                    break;
         }
+
 
         return super.onOptionsItemSelected(item);
     }
